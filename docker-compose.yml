@@ -2,6 +2,17 @@ version: '3.9'
 
 services:
 
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    env_file:
+      - ./app/.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
   appium1:
     image: appium/appium
     container_name: appium_server_1
@@ -33,9 +44,13 @@ services:
     container_name: python_runner
     volumes:
       - ./app:/app
-    environment:
-      - ENV_FILE=.env
-    restart: always
+    env_file:
+      - ./app/.env
     depends_on:
+      - postgres
       - appium1
       - appium2
+    restart: always
+
+volumes:
+  pgdata:
