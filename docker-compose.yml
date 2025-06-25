@@ -21,6 +21,7 @@ services:
       - "4723:4723"
     environment:
       - APPIUM_SESSION_OVERRIDE=true
+    command: ["appium", "--base-path", "/wd/hub","--relaxed-security"]
     volumes:
       - /dev/bus/usb:/dev/bus/usb
     restart: always
@@ -33,6 +34,7 @@ services:
       - "4725:4723"
     environment:
       - APPIUM_SESSION_OVERRIDE=true
+    command: ["appium", "--base-path", "/wd/hub","--relaxed-security"]
     volumes:
       - /dev/bus/usb:/dev/bus/usb
     restart: always
@@ -51,6 +53,8 @@ services:
       - appium1
       - appium2
     restart: always
+    ports:
+      - "5000:5000"
 
 volumes:
   pgdata:
